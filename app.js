@@ -12,19 +12,18 @@ app.use('/index.html', express.static('index.html'))
 
 app.post('/token', function(req, res) {
 
-    console.log('hahahah')
-
 
     var payload = req.body.payload;
     var privateKey = req.body.privateKey;
     var expiresIn = req.body.expiresIn;
+    var token;
 
-    console.log(payload + '0000')
-    console.log(privateKey + '1111')
-    console.log(expiresIn + '22222')
-    var token = jwt.sign(payload, privateKey, { expiresIn: expiresIn });
+    if(expiresIn) {
+      token = jwt.sign(payload, privateKey, { expiresIn: expiresIn });
+    } else {
+      token = jwt.sign(payload, privateKey);
+    }
 
-    console.log(token + 'token')
     res.json({ token: 'bearer ' + token })
 })
 

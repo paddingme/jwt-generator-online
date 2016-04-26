@@ -104,7 +104,7 @@
                 expiresIn = $('#expiresIn').val(),
                 reg = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i;
 
-            if(!reg.exec(expiresIn)){
+            if(expiresIn && !reg.exec(expiresIn)){
                 $('#expires-error').show();
                 return false;
             }
