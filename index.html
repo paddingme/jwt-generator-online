@@ -40,15 +40,15 @@
             <div class="panel-body">
                 <form id="form" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 col-sm-offset-1 control-label" for="payload">payload(载荷):</label>
+                        <label class="col-sm-2 col-sm-offset-1 control-label" for="payload"><span class="text-danger">*</span>payload(载荷):</label>
                         <div class="col-sm-7">
-                            <input type="text" placeholder="请填入你的 payload 可以是对象或者字符串，例如： {iss: myUseridIs356789} 或 iamplayload" id="payload" class="form-control" required>
+                            <input type="text" placeholder="输入 payload 可是对象或字符串，如： {iss: myUseridIs356789} 或 iamplayload" id="payload" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 col-sm-offset-1 control-label" for="privateKey">privateKey(秘钥):</label>
+                        <label class="col-sm-2 col-sm-offset-1 control-label" for="privateKey"><span class="text-danger">*</span>privateKey(秘钥):</label>
                         <div class="col-sm-7">
-                            <input type="text" placeholder="请填入你的秘钥，例如：IamAPrivateKeyNiYongYuanCaiBuDao" id="privateKey" class="form-control" required>
+                            <input type="text" placeholder="输入秘钥，如：IamAPrivateKeyNiYongYuanCaiBuDao" id="privateKey" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -60,7 +60,8 @@
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-offset-1 control-label" for="expiresIn">expiresIn(过期时间):</label>
                         <div class="col-sm-7">
-                            <input type="text" id="expiresIn" class="form-control" placeholder="请输入秒数或具体的时间简写，如 500，5d,5 days, 10h 等" aria-describedby="helpBlock">
+                            <input type="text" id="expiresIn" class="form-control" placeholder="输入秒数或具体时间简写，如 500，5d,5 days, 10h等" aria-describedby="helpBlock">
+                            <span class="text-danger" style="display:none" id="expires-error">输入的时间不合法，请重新输入!</span>
                             <span id="helpBlock" class="help-block"> <code>notBefore</code>, <code>audience</code>, <code>subject</code>, <code>issuer</code>, <code>jwtid</code>, <code>subject</code>, <code>noTimestamp</code>, <code>headers</code> 等可选参数暂不提供</span>
                         </div>
                     </div>
@@ -91,20 +92,36 @@
     <script src="http://libs.useso.com/js/jquery/1.8.3/jquery.min.js"></script>
 
     <script>
-    $('#form').submit(function() {
 
-        $.post('/token', {
-            payload: $('#payload').val(),
-            privateKey: $('#privateKey').val(),
-            expiresIn:  $('#expiresIn').val()
-        }, function(data) {
+    $(function() {
 
-            console.log(data)
-            $('#result').html(data.token);
-        });
 
-        return false;
-    })
+         $('#form').submit(function() {
+
+
+            var payload = $('#payload').val(),
+                privateKey = $('#privateKey').val(),
+                expiresIn = $('#expiresIn').val(),
+                reg = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i;
+
+            if(!reg.exec(expiresIn)){
+                $('#expires-error').show();
+                return false;
+            }
+
+            $.post('/token', {
+                payload: payload,
+                privateKey: privateKey,
+                expiresIn:  expiresIn
+            }, function(data) {
+
+                $('#result').html(data.token);
+            });
+
+            return false;
+        })
+    });
+
     </script>
 </body>
 
