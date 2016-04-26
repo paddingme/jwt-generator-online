@@ -1,0 +1,29 @@
+{
+  "name": "jwt-generator-online",
+  "version": "1.0.0",
+  "description": "json web token generator online (http://jwt.padding.me)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paddingme/jwt-generator-online.git"
+  },
+  "keywords": [
+    "jwt",
+    "generator",
+    "jsonwebtoken"
+  ],
+  "author": "paddingme",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paddingme/jwt-generator-online/issues"
+  },
+  "homepage": "https://github.com/paddingme/jwt-generator-online#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^5.7.0"
+  }
+}
