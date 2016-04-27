@@ -13,12 +13,15 @@ app.use('/index.html', express.static('index.html'))
 app.post('/token', function(req, res) {
 
 
-    var payload = req.body.payload;
+
+    var payload = JSON.parse(req.body.payload);
     var privateKey = req.body.privateKey;
-    var expiresIn = req.body.expiresIn;
+    var expiresIn = '' +req.body.expiresIn;
     var token;
 
-    if(expiresIn) {
+
+
+    if(expiresIn && typeof payload === 'object') {
       token = jwt.sign(payload, privateKey, { expiresIn: expiresIn });
     } else {
       token = jwt.sign(payload, privateKey);
@@ -29,6 +32,6 @@ app.post('/token', function(req, res) {
 
 
 
-app.listen(4002, function() {
-    console.log('jwt generator app is listening on port 4002!');
+app.listen(2651, function() {
+    console.log('jwt generator app is listening on port 2651!');
 });
