@@ -2,11 +2,14 @@ var express = require('express');
 var app = express();
 var jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 // app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use('/index.html', express.static('index.html'))
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+})
 
 
 
@@ -14,13 +17,17 @@ app.post('/token', function(req, res) {
 
 
 
+    var str  = '' + req.body.payload;
+
+    console.log(str)
+    console.log(typeof str)
     var payload = JSON.parse(req.body.payload);
     var privateKey = req.body.privateKey;
     var expiresIn = '' +req.body.expiresIn;
     var token;
 
 
-
+    console.log(expiresIn)
     if(expiresIn && typeof payload === 'object') {
       token = jwt.sign(payload, privateKey, { expiresIn: expiresIn });
     } else {
