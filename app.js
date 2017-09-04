@@ -7,6 +7,9 @@ var path = require('path');
 // app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+
+app.use(express.static(__dirname + '/public'))
+
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 })
@@ -15,13 +18,17 @@ app.get('/', function(req, res) {
 
 app.post('/token', function(req, res) {
 
-
-
     var str  = '' + req.body.payload;
 
-    console.log(str)
-    console.log(typeof str)
-    var payload = JSON.parse(req.body.payload);
+
+    var payload = req.body.payload
+
+    try {
+        payload = JSON.parse(req.body.payload);
+    } catch (error) {
+        
+    }
+
     var privateKey = req.body.privateKey;
     var expiresIn = '' +req.body.expiresIn;
     var token;

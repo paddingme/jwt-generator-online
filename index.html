@@ -19,20 +19,17 @@
     <meta name="twitter:card" content="jwt-generator-online">
     <meta name="twitter:site" content="@paddingme">
     <meta name="twitter:creator" content="@paddingme">
-    <meta name="twitter:url" content="http://jwt.padding.me">
+    <meta name="twitter:url" content="://jwt.padding.me">
     <meta name="twitter:title" content="jwt generator online">
     <meta name="twitter:description" content="jwt generator online">
-    <!-- TODO -->
-    <meta name="twitter:image" content="https://example.com/image.jpg">
-
-
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   
+    <link rel="stylesheet" href="./bootstrap-3.3.7/css/bootstrap.min.css"
 </head>
 
 <body>
     <div class="container center-block ">
         <div style="text-align: center;">
-            <img src="http://blog.leapoahead.com/2015/09/06/understanding-jwt/jwt.png" alt="" width="60%" style="position: relative;left:-10%">
+            <img src="./jwt.png" alt="" width="60%" style="position: relative;left:-10%">
         </div>
         <h1>Json Web Token Generator <small>在线生成 JWT</small></h1>
         <h2></h2>
@@ -82,14 +79,14 @@
         </div>
         <div class="footer" style="text-align: center;position: fixed; bottom: 20px;width:100%;left:0">
 
-            created &lt;3 by <a href="padding.me" target="_blank">paddingme</a>
+            created &lt;3 by <a href="http://padding.me" target="_blank">paddingme</a>
         </div>
 
     </div>
 
 
 
-    <script src="//cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+    <script src="./jquery-1.8.3.min.js"></script>
 
     <script>
 
@@ -104,11 +101,13 @@
                 expiresIn = $('#expiresIn').val(),
                 reg = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i;
 
+            $('#result').html('loading....');
             if(expiresIn && !reg.exec(expiresIn)){
                 $('#expires-error').show();
                 return false;
-            }
-
+            } 
+            $('#expires-error').hide();
+          
             $.post('/token', {
                 payload: payload,
                 privateKey: privateKey,
